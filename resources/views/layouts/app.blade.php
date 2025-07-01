@@ -28,8 +28,34 @@
             @endif
 
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
+            <main class="flex flex-row">
+                <!-- left panel -->
+                <div class="w-1/4 py-6 px-4 sm:px-6 lg:px-8">
+                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6 text-gray-900 dark:text-gray-100">
+                            {{ $leftSlot ?? '' }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main panel -->
+                <div class="w-1/2 py-6 px-4 sm:px-6 lg:px-8">
+                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6 text-gray-900 dark:text-gray-100">
+                            {{ $postSlot ?? '' }}
+                            {{ $mainSlot ?? '' }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- right panel -->
+                <div class="w-1/4 py-6 px-4 sm:px-6 lg:px-8">
+                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6 text-gray-900 dark:text-gray-100">
+                            {{ $rightSlot ?? '' }}
+                        </div>
+                    </div>
+                </div>
             </main>
         </div>
     </body>

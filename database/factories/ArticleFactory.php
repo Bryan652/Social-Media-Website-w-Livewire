@@ -18,10 +18,12 @@ class ArticleFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
-            'postText' => $this->faker->paragraph(),
-            'postImage' => $this->faker->imageUrl(),
-            'postVideo' => $this->faker->imageUrl(),
+            'user_id' => \App\Models\User::factory(),
+            'postText' => $this->faker->sentence(),
+            'postImage' => "https://picsum.photos/600/400?random={$this->faker->numberBetween(1, 100)}",
+            'postVideo' => $this->faker->url(),
+            'created_at' => fake()->dateTimeThisYear(),
+            'updated_at' => fake()->dateTimeThisYear(),
         ];
     }
 }

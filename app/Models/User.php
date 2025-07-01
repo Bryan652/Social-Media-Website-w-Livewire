@@ -45,4 +45,30 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function article() {
+        return $this->hasMany(article::class);
+    }
+
+    /**
+     * belongsToMany(RelatedModel, 'pivotTableName', 'columnName', 'columnName');
+     *
+     * 3rd parameter foreign key for the current model
+     * 4th parameter foreign key for the related model
+    */
+
+    public function friends() {
+        return $this->belongsToMany(User::class, 'friend_users', 'user_id', 'friend_id');
+    }
+    // return yung current user na innadd as friends
+
+    public function friendsOf() {
+        return $this->belongsToMany(User::class, 'friend_users', 'friend_id', 'user_id');
+    }
+    // retirn the user na nag add sa current user as friends
+
+    public function allFriends() {
+        return $this->friends->merge($this->friendsOf)->unique('id');
+    }
+    // combine both list na inadd ng user tsaka nag add sa currnet user
 }

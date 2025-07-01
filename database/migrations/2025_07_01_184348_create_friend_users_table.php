@@ -14,9 +14,10 @@ return new class extends Migration
     {
         Schema::create('friend_users', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class, 'user_id')->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(User::class, 'friend_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(User::class, 'friend_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
+            $table->unique(['user_id', 'friend_id']);
         });
     }
 
