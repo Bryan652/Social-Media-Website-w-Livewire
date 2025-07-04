@@ -71,4 +71,14 @@ class User extends Authenticatable
         return $this->friends->merge($this->friendsOf)->unique('id');
     }
     // combine both list na inadd ng user tsaka nag add sa currnet user
+
+    public function addFriend($friendId)
+{
+    // Prevent adding self or duplicate
+    if ($this->id == $friendId || $this->friends()->where('friend_id', $friendId)->exists()) {
+        return false;
+    }
+    $this->friends()->attach($friendId);
+    return true;
+}
 }

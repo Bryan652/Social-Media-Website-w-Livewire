@@ -7,30 +7,24 @@ use Livewire\WithFileUploads;
 new class extends Component {
     use WithFileUploads; // para makapag upload ng file
 
-
     public $content;
-    public $image;
+    public $photo;
+
+    protected $rules = [
+            'content' => 'required|min:3',
+            'photo' => 'nullable|image|max:2048'
+    ];
 
     public function submit()
     {
-        $this->validate([
-            'content' => 'required|string|max:255',
-            'image' => 'nullable|image|max:2048',
-        ]);
-
-        $imagePath = null;
-        if ($this->image) {
-            $imagePath = $this->image->store('images', 'public');
-        }
-
+        $this->validate();
 
         article::create([
             'user_id' => auth()->id(),
             'postText' => $this->content,
-            'postImage' => $imagePath
+            'postImage' => $this->photo ? $this->photo->store('photos', 'public') : null
         ]);
 
-        $this->reset('content', 'image');
         return redirect(request()->header('Referer'));
     }
 }; ?>
@@ -41,7 +35,7 @@ new class extends Component {
         <div class="flex items-start space-x-3">
             <img src="{{ auth()->user()->profile_picture }}" alt="Profile" class="w-10 h-10 rounded-full">
             <input
-                wire:model.defer="content"
+                wire:model="content"
                 class="w-full bg-[#3A3B3C] border-none rounded-full p-3 text-white placeholder-gray-400 focus:ring-0"
                 placeholder="What's on your mind, {{ auth()->user()->name }}?"
             />
@@ -65,13 +59,15 @@ new class extends Component {
                     <input
                         type="file"
                         class="absolute inset-0 opacity-0 cursor-pointer"
-                        wire:model="image"
+                        wire:model="photo"
                     >
                     <span>Photo/video</span>
                 </button>
             </div>
-            <button type="submit" class="btn btn-primary ml-auto">Submit</button>
+            <button type="submit" class="btn btn-primary ml-auto" wire:loading.attr="disabled" wire:target="photo">Submit</button>
         </div>
+
+        @error('photo') <span class="text-red-500 text-sm"">{{ $message }}</span> @enderror
 
         @error('content') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
     </div>
