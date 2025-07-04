@@ -28,16 +28,16 @@ new class extends Component {
 
 
 
-    <h2 class="font-bold">Your Following</h2>
+    <h2 class="font-bold">Your Friends</h2>
     @foreach ($friends as $friend)
         <x-mary-avatar :image="$friend->profile_picture" :title="$friend->username" :subtitle="$friend->name" class="!w-10 m-2" />
     @endforeach
 
-    <h2 class="font-bold mt-2">Add Following</h2>
+    <h2 class="font-bold mt-2">Add Friends</h2>
     @foreach ($notFriends as $nf)
         <div class="flex items-center space-x-2 mb-2">
             <x-mary-avatar :image="$nf->profile_picture" :title="$nf->username" :subtitle="$nf->name" class="!w-10 m-2" />
-            <x-mary-button wire:click="addFriend({{ $nf->id }})" class="btn-primary">Add Friend</x-mary-button>
+            <x-mary-button wire:click="addFriend({{ $nf->id }})" class="btn-primary">Add Friends</x-mary-button>
         </div>
     @endforeach
 </div>
