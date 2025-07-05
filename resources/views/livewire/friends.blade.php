@@ -18,7 +18,7 @@ new class extends Component {
 
     public function addFriend($friendId)
     {
-        $this->user->addFriend($friendId); // implement this in your User model
+        $this->user->addFriend($friendId);
         $this->friends = $this->user->allFriends();
         $friendIds = $this->friends->pluck('id')->push($this->user->id);
         $this->notFriends = User::whereNotIn('id', $friendIds)->get();

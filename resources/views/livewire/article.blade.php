@@ -44,15 +44,12 @@ new class extends Component {
 }; ?>
 
 <div>
-
     <h1 class="mb-8"> User Posts</h1>
     <div class="rounded-md">
         @foreach ($userArticle as $item)
             <div class="mb-8 bg-slate-600 rounded-lg shadow p-4 border border-transparent hover:border-blue-500">
                 <div class="flex items-center mb-3">
                     <x-mary-avatar :image="$item->user->profile_picture" :title="$item->user->name" class="!w-12 !h-12" />
-
-
                 </div>
                 <div x-data="{ edit: false, newText: '{{ addslashes($item->postText) }}' }">
                     <div x-show="!edit">
